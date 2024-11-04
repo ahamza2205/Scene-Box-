@@ -19,13 +19,12 @@ val OrangeGradient = Brush.linearGradient(
 )
 
 @Composable
-fun GradientText() {
+fun GradientText(text: String) {
     BasicText(
-        text = "Stream",
+        text = text,
         style = TextStyle(
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            // Use OrangeGradient directly as the brush
             brush = OrangeGradient
         ),
         modifier = Modifier

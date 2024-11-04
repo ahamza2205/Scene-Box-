@@ -113,5 +113,15 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.bom.v20241001)
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
+
+    // Material 3
+    implementation (libs.androidx.material3.v120alpha08)
+    implementation ("androidx.compose.material:material:1.1.1")
+    // تحقق من إصدار مكتبة Compose المستخدمة
+    implementation  ("androidx.compose.ui:ui:1.0.5")
+    implementation ("androidx.compose.material:material:1.0.5")
+    implementation ("androidx.compose.ui:ui-tooling-preview:1.0.5")
+    // مكتبة التنقل لـ Jetpack Compose
+    implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10")
 }
 
