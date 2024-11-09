@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.example.scenebox.screens.movies.domain.Movie
 
 @Composable
-fun MovieGrid(movies: List<Movie>) {
+fun MovieGrid(movies: List<Movie>, onMovieClick: (Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.fillMaxSize().padding(8.dp),
@@ -17,7 +17,8 @@ fun MovieGrid(movies: List<Movie>) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(movies.size) { index ->
-            MovieCard(movie = movies[index])
+            val movie = movies[index]
+            MovieCard(movie = movie, onMovieClick = onMovieClick)
         }
     }
 }

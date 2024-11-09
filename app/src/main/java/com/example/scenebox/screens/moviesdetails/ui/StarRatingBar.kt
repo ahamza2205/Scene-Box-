@@ -1,5 +1,6 @@
-package com.example.scenebox.screens.moviesdetails
+package com.example.scenebox.screens.moviesdetails.ui
 
+import AccentYellow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -10,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.scale
 
@@ -22,29 +22,27 @@ fun StarRatingBar(userScore: Int) {
     val emptyStars = totalStars - filledStars - if (partialStar > 0) 1 else 0
     Row(verticalAlignment = Alignment.CenterVertically) {
         repeat(filledStars) {
-            GradientStar(modifier = Modifier.size(32.dp))
+            YellowStar(modifier = Modifier.size(32.dp))
         }
         if (partialStar > 0) {
-            GradientStar(modifier = Modifier.size(32.dp), fillFraction = partialStar)
+            YellowStar(modifier = Modifier.size(32.dp), fillFraction = partialStar)
         }
         repeat(emptyStars) {
-            GradientStar(modifier = Modifier.size(32.dp), isFilled = false)
+            YellowStar(modifier = Modifier.size(32.dp), isFilled = false)
         }
     }
 }
+
 @Composable
-fun GradientStar(
+fun YellowStar(
     modifier: Modifier = Modifier,
     isFilled: Boolean = true,
     fillFraction: Float = 1.0f
 ) {
     Canvas(modifier = modifier) {
-        val gradientBrush = Brush.linearGradient(
-            colors = listOf(Color(0xFFFF8A65), Color(0xFFFF5A5F))
-        )
+        val yellowColor = AccentYellow
 
         scale(scale = size.minDimension / 100f) {
-            // شكل النجمة
             val path = Path().apply {
                 moveTo(50f, 0f)
                 lineTo(61f, 35f)
@@ -59,7 +57,7 @@ fun GradientStar(
                 close()
             }
             if (isFilled) {
-                drawPath(path, brush = gradientBrush)
+                drawPath(path, color = yellowColor)
                 if (fillFraction < 1.0f) {
                     drawRect(
                         color = Color.Black.copy(alpha = 0.5f),
@@ -68,7 +66,7 @@ fun GradientStar(
                     )
                 }
             } else {
-                drawPath(path, color = Color.Gray)
+                drawPath(path, color = Color.Gray) // Empty star color
             }
         }
     }

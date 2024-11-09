@@ -1,7 +1,7 @@
 package com.example.scenebox.data.remote
 
 import com.example.scenebox.screens.movies.domain.MovieResponse
-import com.example.scenebox.screens.moviesdetails.MovieDetailsResponse
+import com.example.scenebox.screens.moviesdetails.domain.MovieDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -37,8 +37,9 @@ interface MovieApiService {
     ): MovieResponse
 
 
-    @GET("movie/{id}")
+    @GET("movie/{movieId}")
     suspend fun getMovieDetails(
-        @Path("id") movieId: Int
+        @Path("movieId") movieId: Int,
+        @Query("api_key") apiKey: String
     ): MovieDetailsResponse
 }
