@@ -1,15 +1,12 @@
-package com.example.scenebox.screens.movies
+package com.example.scenebox.screens.movies.ui
 
 import GrayText
 import PrimaryOrange
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -67,7 +64,6 @@ fun TabButton(title: String, selectedTab: String, onClick: () -> Unit) {
         }
     }
 }
-
 
 @Composable
 fun TabRow(selectedTab: String, onTabSelected: (String) -> Unit) {

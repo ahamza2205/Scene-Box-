@@ -121,5 +121,9 @@ dependencies {
     implementation ("androidx.compose.material:material:1.0.5")
     implementation ("androidx.compose.ui:ui-tooling-preview:1.0.5")
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10")
+
+        implementation("io.coil-kt:coil-compose:2.2.2") // Use the latest version
+
+
 }
 

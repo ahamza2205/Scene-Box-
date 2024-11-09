@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.scenebox.screens.HomeScreen
-import com.example.scenebox.screens.movies.MoviesScreen
+import com.example.scenebox.screens.movies.presentation.MoviesScreen
 import com.example.scenebox.screens.ProfileScreen
 
 @Composable
