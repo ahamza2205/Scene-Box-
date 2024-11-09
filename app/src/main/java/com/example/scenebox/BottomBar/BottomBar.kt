@@ -1,13 +1,14 @@
+package com.example.scenebox.BottomBar
+
+import DarkBackground
+import GrayText
+import OrangeGradient
+import PrimaryOrange
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,18 +16,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.scenebox.R
-import com.example.scenebox.ui.theme.GradientText
 
 @Composable
 fun MainScreenWithAnchoredBottomBar() {
@@ -37,7 +32,6 @@ fun MainScreenWithAnchoredBottomBar() {
         Column(modifier = Modifier.fillMaxSize().padding(bottom = 80.dp)) {
             NavigationHost(navController, modifier = Modifier.weight(1f))
         }
-
         ConcaveBottomNavigationBarWithFab(
             selectedItem = selectedItem,
             navController = navController,
@@ -47,7 +41,6 @@ fun MainScreenWithAnchoredBottomBar() {
         )
     }
 }
-
 @Composable
 fun ConcaveBottomNavigationBarWithFab(
     selectedItem: String,
@@ -124,7 +117,6 @@ fun CenteredFab(onClick: () -> Unit) {
     }
 }
 
-
 @Composable
 fun BottomNavigationItem(
     item: NavigationItem,
@@ -162,8 +154,6 @@ fun BottomNavigationItem(
     }
 }
 
-
-
 fun DrawScope.drawConcaveShape() {
     val path = Path().apply {
         val width = size.width
@@ -189,45 +179,4 @@ fun DrawScope.drawConcaveShape() {
         close()
     }
     drawPath(path, Color(0xFF424242))
-}
-
-
-@Composable
-fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
-    NavHost(
-        navController = navController,
-        startDestination = NavigationItem.Home.route,
-        modifier = modifier
-    ) {
-        composable(NavigationItem.Home.route) { HomeScreen() }
-        composable(NavigationItem.Movies.route) { MoviesScreen() }
-        composable(NavigationItem.Profile.route) { ProfileScreen() }
-    }
-}
-
-sealed class NavigationItem(val route: String, val icon: ImageVector, val title: String) {
-    object Home : NavigationItem("home", Icons.Default.Home, "Home")
-    object Movies : NavigationItem("movies", Icons.Default.Add, "Movies")
-    object Profile : NavigationItem("profile", Icons.Default.Person, "Profile")
-}
-
-@Composable
-fun HomeScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        GradientText("Home")
-    }
-}
-
-@Composable
-fun MoviesScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        GradientText("Movies")
-    }
-}
-
-@Composable
-fun ProfileScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        GradientText("Profile")
-    }
 }

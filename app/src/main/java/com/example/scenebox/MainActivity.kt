@@ -1,6 +1,6 @@
 package com.example.scenebox
 
-import MainScreenWithAnchoredBottomBar
+import com.example.scenebox.BottomBar.MainScreenWithAnchoredBottomBar
 import SceneBoxTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
