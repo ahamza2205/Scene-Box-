@@ -16,10 +16,8 @@ class MovieDetailsViewModel @Inject constructor(
 ) : ViewModel() {
     private val _movieDetails = MutableStateFlow<MovieDetailsResponse?>(null)
     val movieDetails: StateFlow<MovieDetailsResponse?> = _movieDetails
-
     private val _errorState = MutableStateFlow<String?>("")
     val errorState: StateFlow<String?> = _errorState
-
     fun getMovieDetails(movieId: Int) {
         viewModelScope.launch {
             try {
