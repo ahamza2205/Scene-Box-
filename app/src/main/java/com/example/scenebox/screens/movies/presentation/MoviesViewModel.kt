@@ -22,7 +22,6 @@ class MoviesViewModel @Inject constructor(
 ) : ViewModel() {
     private val _movies = MutableStateFlow<List<Movie>>(emptyList())
     val movies: StateFlow<List<Movie>> get() = _movies
-
     fun updateMoviesList(selectedTab: String, apiKey: String) {
         viewModelScope.launch {
             _movies.value = when (selectedTab) {
