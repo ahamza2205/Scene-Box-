@@ -26,7 +26,18 @@ import com.example.scenebox.R
 @Composable
 fun MainScreenWithAnchoredBottomBar() {
     val navController = rememberNavController()
-    var selectedItem by remember { mutableStateOf(NavigationItem.Home.route) }
+
+    // Set the default screen as Movies
+    var selectedItem by remember { mutableStateOf(NavigationItem.Movies.route) }
+
+    // Navigate to Movies screen initially
+    LaunchedEffect(Unit) {
+        navController.navigate(NavigationItem.Movies.route) {
+            // This will clear the back stack and make sure Movies is the only screen
+            popUpTo = navController.graph.startDestinationId
+            launchSingleTop = true
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize().background(DarkBackground)) {
         Column(modifier = Modifier.fillMaxSize().padding(bottom = 80.dp)) {
@@ -41,6 +52,7 @@ fun MainScreenWithAnchoredBottomBar() {
         )
     }
 }
+
 @Composable
 fun ConcaveBottomNavigationBarWithFab(
     selectedItem: String,
@@ -82,9 +94,17 @@ fun ConcaveBottomNavigationBarWithFab(
             )
         }
 
-        CenteredFab(onClick = onFabClick)
+        CenteredFab(onClick = {
+            navController.navigate(NavigationItem.Movies.route) {
+                // This will clear the back stack and make sure the MoviesScreen is the only screen
+                popUpTo = navController.graph.startDestinationId
+                launchSingleTop = true
+            }
+            onItemSelected(NavigationItem.Movies.route)  // Reset selectedItem to Movies
+        })
     }
 }
+
 
 @Composable
 fun CenteredFab(onClick: () -> Unit) {
