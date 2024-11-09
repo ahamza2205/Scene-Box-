@@ -31,3 +31,4 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
         )
     }
 }
+

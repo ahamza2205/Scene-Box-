@@ -2,21 +2,15 @@ package com.example.scenebox.screens.moviesdetails.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -35,11 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.scenebox.R
+import com.example.scenebox.screens.moviesdetails.domain.MovieDetailsResponse
 import com.example.scenebox.screens.moviesdetails.ui.StarRatingBar
 
 @Composable
 fun MovieDetailsScreen(
     movieId: Int,
+    selectedTab: String,
     onBackClick: () -> Unit,
     onFavoriteClick: () -> Unit,
     viewModel: MovieDetailsViewModel = hiltViewModel()
@@ -57,7 +53,7 @@ fun MovieDetailsScreen(
         }
 
         movieDetails?.let { details ->
-            // Image takes up the full screen
+
             Image(
                 painter = rememberImagePainter(data = "https://image.tmdb.org/t/p/w500${details.poster_path}"),
                 contentDescription = null,
@@ -65,104 +61,141 @@ fun MovieDetailsScreen(
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Background overlay to darken the image slightly
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.5f))
             )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-            ) {
-                // Spacer to move content down
-                Spacer(modifier = Modifier.height(40.dp))
-
-                // Back button
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Movie Title
-                Text(
-                    text = "${details.title} (${details.release_date.take(4)})",
-                    color = Color.White,
-                    style = MaterialTheme.typography.h5
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Rating and Favorite Icon
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    StarRatingBar(userScore = (details.vote_average * 10).toInt())
-
-                    IconButton(onClick = onFavoriteClick) {
-                        Icon(
-                            imageVector = if (details.id == movieId) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                            contentDescription = "Favorite",
-                            tint = Color.Red
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Runtime
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.time),
-                        contentDescription = "Runtime",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "${details.runtime / 60}h ${details.runtime % 60}m",
-                        color = Color.White,
-                        style = MaterialTheme.typography.subtitle2
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Overview Title
-                Text(
-                    text = "Overview",
-                    color = Color.White,
-                    style = MaterialTheme.typography.subtitle1,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-
-                // Overview Content
-                Text(
-                    text = details.overview,
-                    color = Color.White,
-                    style = MaterialTheme.typography.body1
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-            }
+            MovieDetailsContent(
+                details = details,
+                onBackClick = onBackClick,
+                onFavoriteClick = onFavoriteClick
+            )
         }
     }
 }
 
+@Composable
+fun MovieDetailsContent(
+    details: MovieDetailsResponse,
+    onBackClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Spacer(modifier = Modifier.height(40.dp))
 
+        MovieDetailsHeader(
+            title = details.title,
+            releaseDate = details.release_date,
+            onBackClick = onBackClick
+        )
 
+        Spacer(modifier = Modifier.height(16.dp))
 
+        MovieRatingAndFavorite(
+            rating = details.vote_average,
+            isFavorite = details.id == details.id,
+            onFavoriteClick = onFavoriteClick
+        )
 
+        Spacer(modifier = Modifier.height(8.dp))
 
+        MovieRuntime(runtime = details.runtime)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        MovieOverview(overview = details.overview)
+
+        Spacer(modifier = Modifier.weight(1f))
+    }
+}
+
+@Composable
+fun MovieDetailsHeader(
+    title: String,
+    releaseDate: String,
+    onBackClick: () -> Unit
+) {
+    Column {
+        IconButton(onClick = onBackClick) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.White
+            )
+        }
+
+        Text(
+            text = "$title (${releaseDate.take(4)})",
+            color = Color.White,
+            style = MaterialTheme.typography.h5
+        )
+    }
+}
+
+@Composable
+fun MovieRatingAndFavorite(
+    rating: Double,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        StarRatingBar(userScore = (rating * 10).toInt())
+
+        IconButton(onClick = onFavoriteClick) {
+            Icon(
+                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = "Favorite",
+                tint = Color.Red
+            )
+        }
+    }
+}
+
+@Composable
+fun MovieRuntime(runtime: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.time),
+            contentDescription = "Runtime",
+            tint = Color.White,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = "${runtime / 60}h ${runtime % 60}m",
+            color = Color.White,
+            style = MaterialTheme.typography.subtitle2
+        )
+    }
+}
+
+@Composable
+fun MovieOverview(overview: String) {
+    Column {
+        Text(
+            text = "Overview",
+            color = Color.White,
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = overview,
+            color = Color.White,
+            style = MaterialTheme.typography.body1
+        )
+    }
+}
