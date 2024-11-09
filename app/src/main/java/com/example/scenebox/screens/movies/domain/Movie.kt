@@ -8,7 +8,6 @@ data class Movie(
     val poster_path: String,
     val vote_average: Double
 )
-
 data class MovieResponse(
     val results: List<Movie>
 )

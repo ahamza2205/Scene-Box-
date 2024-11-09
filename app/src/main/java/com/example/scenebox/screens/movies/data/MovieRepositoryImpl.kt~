@@ -1,5 +1,6 @@
 package com.example.scenebox.screens.movies.data
 
+import android.graphics.Movie
 import com.example.scenebox.data.remote.MovieApiService
 import com.example.scenebox.screens.movies.domain.MovieRepository
 import javax.inject.Inject

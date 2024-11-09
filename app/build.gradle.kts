@@ -30,10 +30,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "API_KEY", "\"${project.findProperty("API_KEY") ?: "default_value"}\"")
-        }
-        debug {
-            buildConfigField("String", "API_KEY", "\"${project.findProperty("API_KEY") ?: "default_value"}\"")
         }
     }
     compileOptions {
