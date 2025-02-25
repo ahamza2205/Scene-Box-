@@ -1,0 +1,4 @@
+package com.example.scenebox.screens.moviesdetails.domain
+
+class GetMovieDetailsUseCase {
+}
