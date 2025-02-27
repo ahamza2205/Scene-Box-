@@ -1,9 +1,12 @@
 package com.example.scenebox.BottomBar
 
+import AccentYellow
 import DarkBackground
+import DarkSurface
 import GrayText
 import OrangeGradient
 import PrimaryOrange
+import TransparentColor
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -65,6 +68,7 @@ fun ConcaveBottomNavigationBarWithFab(
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
+            .background(DarkBackground)
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             drawConcaveShape()
@@ -198,5 +202,5 @@ fun DrawScope.drawConcaveShape() {
         lineTo(0f, height)
         close()
     }
-    drawPath(path, Color(0xFF424242))
+    drawPath(path, Color(0xFF242238))
 }
