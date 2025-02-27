@@ -11,5 +11,5 @@ import com.example.scenebox.ui.theme.GradientText
 fun HomeScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         GradientText("Home")
-    }
+        }
 }
