@@ -6,14 +6,12 @@ import com.example.scenebox.data.remote.MovieApiService
 import com.example.scenebox.screens.movies.domain.Movie
 import kotlinx.coroutines.delay
 
-// MoviesPagingSource is responsible for fetching paginated data from the API.
 class MoviesPagingSource(
     private val apiService: MovieApiService, // API service to fetch movie data
     private val category: String, // Movie category (e.g., "Now Playing", "Popular")
     private val apiKey: String // API key for authentication
 ) : PagingSource<Int, Movie>() { // PagingSource requires a key type (Int) and data type (Movie)
 
-    // Function responsible for loading the data for a given page
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val currentPage = params.key ?: 1 // Start from page 1 if no key is provided
@@ -29,7 +27,6 @@ class MoviesPagingSource(
                 else -> throw IllegalArgumentException("Invalid category") // Handle invalid category case
             }
             val movies = response.results ?: emptyList() // Extract movie list, or return an empty list if null
-
             // Return a successful page result with data, previous key, and next key
             LoadResult.Page(
                 data = movies,

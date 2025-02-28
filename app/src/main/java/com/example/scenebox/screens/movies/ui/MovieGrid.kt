@@ -18,7 +18,6 @@ import com.example.scenebox.screens.movies.domain.Movie
 @Composable
 fun MovieGrid(moviesFlow: Flow<PagingData<Movie>>, onMovieClick: (Int) -> Unit , modifier: Modifier = Modifier) {
     val lazyMovies: LazyPagingItems<Movie> = moviesFlow.collectAsLazyPagingItems()
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -33,7 +32,6 @@ fun MovieGrid(moviesFlow: Flow<PagingData<Movie>>, onMovieClick: (Int) -> Unit ,
                 MovieCard(movie = movie, onMovieClick = onMovieClick)
             }
         }
-
         item(span = { GridItemSpan(2) }) {
             if (lazyMovies.loadState.append is androidx.paging.LoadState.Loading) {
                 Box(
