@@ -28,6 +28,15 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+        buildConfigField("String", "API_KEY", "\"${project.properties["API_KEY"]}\"")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -130,7 +139,10 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.2") // Use the latest version
     implementation ("androidx.compose.animation:animation:1.7.5")
 
-
+    // Paging 3 library
+    implementation("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha18")
+    implementation("androidx.paging:paging-compose:3.2.0")
 
 
 }

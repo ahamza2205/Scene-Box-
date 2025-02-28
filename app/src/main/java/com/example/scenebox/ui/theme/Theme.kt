@@ -44,7 +44,7 @@ fun SceneBoxTheme(
     // Apply MaterialTheme with selected color scheme and typography
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = AppTypography,
         content = content
     )
 }

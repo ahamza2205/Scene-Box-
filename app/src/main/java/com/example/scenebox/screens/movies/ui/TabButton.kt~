@@ -59,7 +59,7 @@ fun TabButton(title: String, selectedTab: String, onClick: () -> Unit) {
             Spacer(modifier = Modifier.height(4.dp))
             Box(
                 modifier = Modifier
-                    .width(80.dp)
+                    .width(90.dp)
                     .height(2.dp)
                     .background(PrimaryOrange)
             )

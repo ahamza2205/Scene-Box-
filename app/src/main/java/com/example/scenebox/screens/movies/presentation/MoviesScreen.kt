@@ -12,7 +12,7 @@
     import androidx.compose.ui.Modifier
     import com.example.scenebox.ui.theme.GradientText
     import androidx.compose.foundation.layout.*
-    import androidx.compose.material3.ExperimentalMaterial3Api
+    import androidx.compose.material3.CircularProgressIndicator
     import androidx.compose.material3.Text
     import androidx.compose.runtime.*
     import androidx.compose.ui.graphics.Color
@@ -21,6 +21,8 @@
     import androidx.compose.ui.unit.dp
     import androidx.compose.ui.unit.sp
     import androidx.hilt.navigation.compose.hiltViewModel
+    import androidx.paging.compose.collectAsLazyPagingItems
+    import com.example.scenebox.BuildConfig
     import com.example.scenebox.screens.movies.ui.MovieGrid
     import com.example.scenebox.screens.movies.ui.TabRow
 
@@ -31,10 +33,10 @@
         onMovieClick: (Int) -> Unit,
         viewModel: MoviesViewModel = hiltViewModel()
     ) {
-        val movies by viewModel.movies.collectAsState()
+        val moviesFlow = viewModel.movies
 
         LaunchedEffect(selectedTab) {
-            viewModel.updateMoviesList(selectedTab, "bc25642cb67605dd1a496763099996a5")
+            viewModel.updateMoviesList(selectedTab, BuildConfig.API_KEY)
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -62,11 +64,7 @@
                 enter = fadeIn(tween(1000)) + expandVertically(tween(1000)),
                 exit = fadeOut(tween(1000)) + shrinkVertically(tween(1000))
             ) {
-                MovieGrid(movies = movies, onMovieClick = onMovieClick)
+                MovieGrid(moviesFlow = moviesFlow, onMovieClick = onMovieClick)
             }
         }
     }
-
-
-
-

@@ -1,5 +1,6 @@
 package com.example.scenebox.screens.moviesdetails.data
 
+import com.example.scenebox.BuildConfig
 import com.example.scenebox.data.remote.MovieApiService
 import com.example.scenebox.screens.moviesdetails.domain.MovieDetailsRepository
 import com.example.scenebox.screens.moviesdetails.domain.MovieDetailsResponse
@@ -11,6 +12,6 @@ class MovieDetailsRepositoryImpl @Inject constructor(
 ) : MovieDetailsRepository {
 
     override suspend fun getMovieDetails(movieId: Int): MovieDetailsResponse {
-        return movieApiService.getMovieDetails(movieId, "bc25642cb67605dd1a496763099996a5")
+        return movieApiService.getMovieDetails(movieId, BuildConfig.API_KEY)
     }
 }

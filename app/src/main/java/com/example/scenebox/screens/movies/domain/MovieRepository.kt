@@ -1,8 +1,9 @@
 package com.example.scenebox.screens.movies.domain
 
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+
 interface MovieRepository {
-    suspend fun getNowPlayingMovies(apiKey: String): List<Movie>
-    suspend fun getPopularMovies(apiKey: String): List<Movie>
-    suspend fun getTopRatedMovies(apiKey: String): List<Movie>
-    suspend fun getUpcomingMovies(apiKey: String): List<Movie>
+
+    fun getMovies(category: String, apiKey: String): Flow<PagingData<Movie>>
 }
