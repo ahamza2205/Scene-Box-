@@ -10,16 +10,18 @@ import com.example.scenebox.screens.movies.domain.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(private val apiService: MovieApiService) :
-    MovieRepository {
+class MovieRepositoryImpl @Inject constructor(
+    private val apiService: MovieApiService
+) : MovieRepository {
 
     override fun getMovies(category: String, apiKey: String): Flow<PagingData<Movie>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = false,
-                prefetchDistance = 1
+                pageSize = 20, // Defines the number of items to load per page
+                enablePlaceholders = false, // Disables placeholders to improve UI experience
+                prefetchDistance = 1 // Prefetches 1 page ahead for smooth scrolling
             ),
+            // Creates a new instance of MoviesPagingSource to fetch paginated movie data
             pagingSourceFactory = { MoviesPagingSource(apiService, category, apiKey) }
         ).flow
     }

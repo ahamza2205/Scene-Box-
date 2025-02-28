@@ -6,37 +6,42 @@ import com.example.scenebox.data.remote.MovieApiService
 import com.example.scenebox.screens.movies.domain.Movie
 import kotlinx.coroutines.delay
 
+// MoviesPagingSource is responsible for fetching paginated data from the API.
 class MoviesPagingSource(
-    private val apiService: MovieApiService,
-    private val category: String,
-    private val apiKey: String
-) : PagingSource<Int, Movie>() {
+    private val apiService: MovieApiService, // API service to fetch movie data
+    private val category: String, // Movie category (e.g., "Now Playing", "Popular")
+    private val apiKey: String // API key for authentication
+) : PagingSource<Int, Movie>() { // PagingSource requires a key type (Int) and data type (Movie)
 
+    // Function responsible for loading the data for a given page
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
-            val currentPage = params.key ?: 1
-            val pageSize = 20
-            delay(2000)
+            val currentPage = params.key ?: 1 // Start from page 1 if no key is provided
+            val pageSize = 20 // Number of items per page
+            delay(2000) // Simulating a network delay of 2 seconds
 
+            // Fetch data based on the selected category
             val response = when (category) {
                 "Now Playing" -> apiService.getNowPlayingMovies(apiKey, page = currentPage)
                 "Popular" -> apiService.getPopularMovies(apiKey, page = currentPage)
                 "Upcoming" -> apiService.getUpcomingMovies(apiKey, page = currentPage)
                 "Top Rated" -> apiService.getTopRatedMovies(apiKey, page = currentPage)
-                else -> throw IllegalArgumentException("Invalid category")
+                else -> throw IllegalArgumentException("Invalid category") // Handle invalid category case
             }
-            val movies = response.results ?: emptyList()
+            val movies = response.results ?: emptyList() // Extract movie list, or return an empty list if null
 
+            // Return a successful page result with data, previous key, and next key
             LoadResult.Page(
                 data = movies,
-                prevKey = if (currentPage == 1) null else currentPage - 1,
-                nextKey = if (movies.isEmpty()) null else currentPage + 1
+                prevKey = if (currentPage == 1) null else currentPage - 1, // No previous page if on page 1
+                nextKey = if (movies.isEmpty()) null else currentPage + 1 // No next page if the list is empty
             )
         } catch (e: Exception) {
-            LoadResult.Error(e)
+            LoadResult.Error(e) // Handle any errors (e.g., network failures)
         }
     }
 
+    // Determines the key for refreshing data when the user swipes to refresh
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
@@ -44,4 +49,3 @@ class MoviesPagingSource(
         }
     }
 }
-
