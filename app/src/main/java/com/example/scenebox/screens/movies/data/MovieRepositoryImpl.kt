@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.scenebox.data.remote.MovieApiService
-import com.example.scenebox.MoviesPagingSource
+import com.example.scenebox.pagination.MoviesPagingSource
 import com.example.scenebox.screens.movies.domain.Movie
 import com.example.scenebox.screens.movies.domain.MovieRepository
 import kotlinx.coroutines.flow.Flow

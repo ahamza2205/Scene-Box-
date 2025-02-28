@@ -1,4 +1,4 @@
-package com.example.scenebox
+package com.example.scenebox.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
