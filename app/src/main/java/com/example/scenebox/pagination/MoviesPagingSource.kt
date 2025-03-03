@@ -15,7 +15,6 @@ class MoviesPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val currentPage = params.key ?: 1 // Start from page 1 if no key is provided
-            val pageSize = 20 // Number of items per page
             delay(2000) // Simulating a network delay of 2 seconds
 
             // Fetch data based on the selected category
