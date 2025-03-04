@@ -12,6 +12,7 @@
     import androidx.compose.ui.Modifier
     import com.example.scenebox.ui.theme.GradientText
     import androidx.compose.foundation.layout.*
+    import androidx.compose.material3.Button
     import androidx.compose.material3.CircularProgressIndicator
     import androidx.compose.material3.Text
     import androidx.compose.runtime.*
@@ -31,6 +32,7 @@
         selectedTab: String,
         onTabSelected: (String) -> Unit,
         onMovieClick: (Int) -> Unit,
+        onFilterClick: () -> Unit, // أضف هذا
         viewModel: MoviesViewModel = hiltViewModel()
     ) {
         val moviesFlow = viewModel.movies
@@ -40,22 +42,28 @@
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
-            Column(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                GradientText(text = "Movies List")
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "Discover, Watch, Enjoy!",
-                    style = TextStyle(
-                        fontWeight = FontWeight.Light,
-                        fontSize = 18.sp,
-                        color = Color.White
-                    ),
-                    modifier = Modifier.align(Alignment.Start)
-                )
+                Column {
+                    GradientText(text = "Movies List")
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Discover, Watch, Enjoy!",
+                        style = TextStyle(
+                            fontWeight = FontWeight.Light,
+                            fontSize = 18.sp,
+                            color = Color.White
+                        ),
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                }
+                Button(onClick = { onFilterClick() }) {
+                    Text("Filter")
+                }
             }
             TabRow(selectedTab = selectedTab, onTabSelected = onTabSelected)
 

@@ -33,7 +33,7 @@ fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifi
 
     var selectedGenres by remember { mutableStateOf<List<String>>(emptyList()) }
     var minRating by remember { mutableStateOf(0f) }
-    val moviesViewModel: MoviesViewModel = viewModel()
+    val moviesViewModel: MoviesViewModel = viewModel() 
 
     NavHost(
         navController = navController,

@@ -23,9 +23,9 @@
         private val _movies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
         val movies: StateFlow<PagingData<Movie>> = _movies.asStateFlow()
 
-        fun updateMoviesList(selectedTab: String, apiKey: String) {
+        fun updateMoviesList(selectedTab: String, apiKey: String, minRating: Double = 0.0, genre: String? = null) {
             viewModelScope.launch {
-                getMoviesUseCase(selectedTab, apiKey)
+                getMoviesUseCase(selectedTab, apiKey, minRating, genre)
                     .cachedIn(viewModelScope)
                     .collectLatest { pagingData ->
                         _movies.value = pagingData
