@@ -23,7 +23,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.scenebox.BuildConfig
-import com.example.scenebox.screens.movies.presentation.FilterScreen
+import com.example.scenebox.screens.movies.presentation.FilterBottomSheet
 import com.example.scenebox.screens.movies.presentation.MoviesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,32 +55,36 @@ fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifi
             )
         }
 
+
         composable(NavigationItem.Profile.route) { ProfileScreen() }
 
-        composable("filterScreen") {
-            FilterScreen(
-                genres = listOf("Action", "Comedy", "Drama", "Horror"),
-                selectedGenres = selectedGenres,
-                onGenreSelected = { genre ->
-                    selectedGenres = if (selectedGenres.contains(genre)) {
-                        selectedGenres - genre
-                    } else {
-                        selectedGenres + genre
-                    }
-                },
-                rating = minRating,
-                onRatingChanged = { minRating = it },
-                onApplyFilter = {
-                    navController.popBackStack()
-                    moviesViewModel.updateMoviesList(
-                        selectedTab,
-                        BuildConfig.API_KEY,
-                        minRating.toDouble(),
-                        selectedGenres.firstOrNull()
-                    )
-                }
-            )
-        }
+            composable("filterScreen") {
+                FilterBottomSheet(
+                    genres = listOf("Action", "Comedy", "Drama", "Horror"),
+                    selectedGenres = selectedGenres,
+                    onGenreSelected = { genre ->
+                        selectedGenres = if (selectedGenres.contains(genre)) {
+                            selectedGenres - genre
+                        } else {
+                            selectedGenres + genre
+                        }
+                    },
+                    rating = minRating,
+                    onRatingChanged = { minRating = it },
+                    onApplyFilter = {
+                        navController.popBackStack()
+                        moviesViewModel.updateMoviesList(
+                            selectedTab,
+                            BuildConfig.API_KEY,
+                            minRating.toDouble(),
+                            selectedGenres.firstOrNull()?.toInt()
+                        )
+                    },
+                    onDismiss = { navController.popBackStack() }
+                )
+            }
+
+
 
         composable(
             route = "movieDetails/{movieId}/{selectedTab}",

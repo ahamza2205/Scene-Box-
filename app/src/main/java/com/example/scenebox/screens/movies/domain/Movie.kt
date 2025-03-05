@@ -7,7 +7,7 @@ data class Movie(
     val release_date: String,
     val poster_path: String,
     val vote_average: Double,
-    val genre: List<String>
+    val genre_ids: List<Int>
 )
 
 data class MovieResponse(

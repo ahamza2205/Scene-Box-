@@ -10,11 +10,11 @@ import javax.inject.Inject
 class GetMoviesUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-    operator fun invoke(category: String, apiKey: String, minRating: Double = 0.0, genre: String? = null): Flow<PagingData<Movie>> {
+    operator fun invoke(category: String, apiKey: String, minRating: Double = 0.0, genreId: Int? = null): Flow<PagingData<Movie>> {
         return repository.getMovies(category, apiKey).map { pagingData ->
             pagingData.filter { movie ->
                 movie.vote_average >= minRating &&
-                        (genre == null || movie.genre.any { it.equals(genre, ignoreCase = true) })
+                        (genreId == null || movie.genre_ids.contains(genreId))
             }
         }
     }

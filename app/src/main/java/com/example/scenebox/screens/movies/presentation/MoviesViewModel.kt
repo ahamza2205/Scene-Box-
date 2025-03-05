@@ -6,7 +6,6 @@
     import androidx.paging.cachedIn
     import com.example.scenebox.screens.movies.domain.GetMoviesUseCase
     import com.example.scenebox.screens.movies.domain.Movie
-    import com.example.scenebox.screens.movies.domain.MovieRepository
     import dagger.hilt.android.lifecycle.HiltViewModel
     import kotlinx.coroutines.flow.MutableStateFlow
     import kotlinx.coroutines.flow.StateFlow
@@ -23,9 +22,14 @@
         private val _movies = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
         val movies: StateFlow<PagingData<Movie>> = _movies.asStateFlow()
 
-        fun updateMoviesList(selectedTab: String, apiKey: String, minRating: Double = 0.0, genre: String? = null) {
+        fun updateMoviesList(
+            selectedTab: String,
+            apiKey: String,
+            minRating: Double = 0.0,
+            genreId: Int? = null
+        ) {
             viewModelScope.launch {
-                getMoviesUseCase(selectedTab, apiKey, minRating, genre)
+                getMoviesUseCase(selectedTab, apiKey, minRating, genreId)
                     .cachedIn(viewModelScope)
                     .collectLatest { pagingData ->
                         _movies.value = pagingData
@@ -33,3 +37,5 @@
             }
         }
     }
+
+

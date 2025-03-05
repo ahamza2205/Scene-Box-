@@ -1,10 +1,11 @@
 package com.example.scenebox.screens.movies.domain
 
+
 import androidx.paging.PagingData
 import androidx.paging.filter
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(
     private val repository: MovieRepository
@@ -12,7 +13,8 @@ class GetMoviesUseCase @Inject constructor(
     operator fun invoke(category: String, apiKey: String, minRating: Double = 0.0, genre: String? = null): Flow<PagingData<Movie>> {
         return repository.getMovies(category, apiKey).map { pagingData ->
             pagingData.filter { movie ->
-                movie.rating >= minRating && (genre == null || movie.genre.contains(genre, ignoreCase = true))
+                movie.vote_average >= minRating &&
+                        (genre == null || movie.genre.any { it.equals(genre, ignoreCase = true) })
             }
         }
     }

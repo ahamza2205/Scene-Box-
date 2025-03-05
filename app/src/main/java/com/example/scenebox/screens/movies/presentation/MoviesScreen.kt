@@ -1,5 +1,6 @@
     package com.example.scenebox.screens.movies.presentation
 
+    import android.util.Log
     import androidx.compose.animation.AnimatedVisibility
     import androidx.compose.animation.core.tween
     import androidx.compose.animation.expandVertically
@@ -32,10 +33,27 @@
         selectedTab: String,
         onTabSelected: (String) -> Unit,
         onMovieClick: (Int) -> Unit,
-        onFilterClick: () -> Unit, // أضف هذا
+        onFilterClick: () -> Unit,
         viewModel: MoviesViewModel = hiltViewModel()
     ) {
         val moviesFlow = viewModel.movies
+        var showBottomSheet by remember { mutableStateOf(false) }
+
+        val genres = listOf("Action", "Drama", "Comedy", "Horror", "Sci-Fi")
+        var selectedGenres by remember { mutableStateOf(listOf<String>()) }
+        var rating by remember { mutableStateOf(5f) }
+
+        val onGenreSelected: (String) -> Unit = { genre ->
+            selectedGenres = if (selectedGenres.contains(genre)) {
+                selectedGenres - genre
+            } else {
+                selectedGenres + genre
+            }
+        }
+
+        val onRatingChanged: (Float) -> Unit = { newRating ->
+            rating = newRating
+        }
 
         LaunchedEffect(selectedTab) {
             viewModel.updateMoviesList(selectedTab, BuildConfig.API_KEY)
@@ -61,7 +79,7 @@
                         modifier = Modifier.align(Alignment.Start)
                     )
                 }
-                Button(onClick = { onFilterClick() }) {
+                Button(onClick = { showBottomSheet = true }) {
                     Text("Filter")
                 }
             }
@@ -75,4 +93,29 @@
                 MovieGrid(moviesFlow = moviesFlow, onMovieClick = onMovieClick)
             }
         }
+
+        if (showBottomSheet) {
+            FilterBottomSheet(
+                genres = genres,
+                selectedGenres = selectedGenres,
+                onGenreSelected = onGenreSelected,
+                rating = rating,
+                onRatingChanged = onRatingChanged,
+                onApplyFilter = {
+                    val selectedGenreId = genreMap[selectedGenres.firstOrNull()]
+                    Log.d("MoviesScreen", "Applying filter with Genre: $selectedGenres, GenreID: $selectedGenreId, MinRating: $rating")
+                    viewModel.updateMoviesList(selectedTab, BuildConfig.API_KEY, rating.toDouble(), selectedGenreId)
+                    showBottomSheet = false
+                },
+                onDismiss = { showBottomSheet = false }
+            )
+
+        }
     }
+    val genreMap = mapOf(
+        "Action" to 28,
+        "Drama" to 18,
+        "Comedy" to 35,
+        "Horror" to 27,
+        "Sci-Fi" to 878
+    )
