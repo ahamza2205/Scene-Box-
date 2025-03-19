@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">سين بوكس</string>
+    <string name="movies_list">قائمة الأفلام</string>
+    <string name="discover_watch_enjoy">اكتشف، شاهد، استمتع!</string>
+    <string name="filter">تصفية</string>
+    <string name="tab_now_playing">يُعرض الآن</string>
+    <string name="tab_popular">الأكثر شهرة</string>
+    <string name="tab_top_rated">أعلى تقييم</string>
+    <string name="tab_upcoming">القادم</string>
+</resources>

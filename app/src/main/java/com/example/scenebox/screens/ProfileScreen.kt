@@ -10,6 +10,7 @@ import com.example.scenebox.ui.theme.GradientText
 @Composable
 fun ProfileScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        GradientText("Profile")
+        GradientText("Profile"
+        , 24f)
     }
 }

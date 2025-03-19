@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SceneBox</string>
+    <string name="movies_list">Lista de películas</string>
+    <string name="discover_watch_enjoy">Descubre, Mira, Disfruta!</string>
+    <string name="filter">Filtrar</string>
+    <string name="tab_now_playing">En cartelera</string>
+    <string name="tab_popular">Populares</string>
+    <string name="tab_top_rated">Mejor valoradas</string>
+    <string name="tab_upcoming">Próximamente</string>
+</resources>

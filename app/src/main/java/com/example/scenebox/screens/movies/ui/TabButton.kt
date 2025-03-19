@@ -6,8 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -15,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.scenebox.R
@@ -32,10 +32,10 @@ fun TabButton(title: String, selectedTab: String, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             val iconRes = when (title) {
-                "Now Playing" -> R.drawable.nowplaying
-                "Popular" -> R.drawable.popular
-                "Top Rated" -> R.drawable.toprated
-                "Upcoming" -> R.drawable.upcoming
+                stringResource(R.string.tab_now_playing) -> R.drawable.nowplaying
+                stringResource(R.string.tab_popular) -> R.drawable.popular
+                stringResource(R.string.tab_top_rated) -> R.drawable.toprated
+                stringResource(R.string.tab_upcoming) -> R.drawable.upcoming
                 else -> R.drawable.nowplaying
             }
             Icon(
@@ -69,7 +69,12 @@ fun TabButton(title: String, selectedTab: String, onClick: () -> Unit) {
 
 @Composable
 fun TabRow(selectedTab: String, onTabSelected: (String) -> Unit) {
-    val tabs = listOf("Now Playing", "Popular", "Top Rated", "Upcoming")
+    val tabs = listOf(
+        stringResource(R.string.tab_now_playing),
+        stringResource(R.string.tab_popular),
+        stringResource(R.string.tab_top_rated),
+        stringResource(R.string.tab_upcoming)
+    )
 
     Row(
         modifier = Modifier

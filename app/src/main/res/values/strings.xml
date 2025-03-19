@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Scene Box</string>
+        <string name="movies_list">Movies List</string>
+        <string name="discover_watch_enjoy">Discover, Watch, Enjoy!</string>
+        <string name="filter">Filter</string>
+        <string name="tab_now_playing">Now Playing</string>
+        <string name="tab_popular">Popular</string>
+        <string name="tab_top_rated">Top Rated</string>
+        <string name="tab_upcoming">Upcoming</string>
 </resources>

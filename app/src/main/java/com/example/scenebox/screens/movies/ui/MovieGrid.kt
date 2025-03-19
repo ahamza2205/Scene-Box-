@@ -19,7 +19,7 @@ import com.example.scenebox.screens.movies.domain.Movie
 fun MovieGrid(moviesFlow: Flow<PagingData<Movie>>, onMovieClick: (Int) -> Unit , modifier: Modifier = Modifier) {
     val lazyMovies: LazyPagingItems<Movie> = moviesFlow.collectAsLazyPagingItems()
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Fixed(1),
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp),

@@ -50,11 +50,13 @@ fun MovieCard(movie: Movie, onMovieClick: (Int) -> Unit) {
                 GradientText(
                     text = movie.title,
                     fontSize = 16f
+
                 )
+
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = movie.overview,
-                    maxLines = 6,
+                    maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
                     style = androidx.compose.material3.MaterialTheme.typography.bodyMedium
                 )
