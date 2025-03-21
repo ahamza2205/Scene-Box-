@@ -11,7 +11,6 @@ interface MovieApiService {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String = "ar",
         @Query("page") page: Int,
         @Query("with_genres") genreId: String? = null,
         @Query("vote_average.gte") minRating: Double? = null
@@ -20,7 +19,6 @@ interface MovieApiService {
     @GET("movie/popular")
    suspend fun getPopularMovies(
         @Query("api_key") apiKey: String ,
-        @Query("language") language: String = "EN",
         @Query("page") page: Int,
         @Query("with_genres") genreId: String? = null,
         @Query("vote_average.gte") minRating: Double? = null
@@ -29,7 +27,6 @@ interface MovieApiService {
     @GET("movie/top_rated")
      suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String = "EN",
         @Query("page") page: Int,
         @Query("with_genres") genreId: String? = null,
         @Query("vote_average.gte") minRating: Double? = null
@@ -38,7 +35,6 @@ interface MovieApiService {
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("api_key") apiKey: String,
-        @Query("language") language: String = "EN",
         @Query("page") page: Int,
         @Query("with_genres") genreId: String? = null,
         @Query("vote_average.gte") minRating: Double? = null

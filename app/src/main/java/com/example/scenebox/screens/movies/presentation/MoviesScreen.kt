@@ -20,6 +20,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +32,9 @@ import com.example.scenebox.BuildConfig
 import com.example.scenebox.R
 import com.example.scenebox.screens.movies.ui.MovieGrid
 import com.example.scenebox.screens.movies.ui.TabRow
+import android.app.Activity
+import android.content.Context
+import com.example.scenebox.sharedPreferences.PreferencesManager
 
 @Composable
 fun MoviesScreen(
@@ -46,18 +50,21 @@ fun MoviesScreen(
     val genres = listOf("Action", "Drama", "Comedy", "Horror", "Sci-Fi")
     var selectedGenres by remember { mutableStateOf(listOf<String>()) }
     var rating by remember { mutableStateOf(5f) }
+    val context = LocalContext.current
+    val preferencesManager = remember { PreferencesManager(context) }
+    var selectedLanguage by remember { mutableStateOf(preferencesManager.getSavedLanguage()) }
 
-    val languages = listOf("AR", "EN", "FR", "ES", "GR")
+
+    val languages = listOf("ar", "en", "fr", "es", "de")
     val languageIcons = mapOf(
-        "AR" to R.drawable.ic_flag_ar,
-        "EN" to R.drawable.ic_flag_en,
-        "FR" to R.drawable.ic_flag_fr,
-        "ES" to R.drawable.ic_flag_es,
-        "GR" to R.drawable.ic_flag_gr
+        "ar" to R.drawable.ic_flag_ar,
+        "en" to R.drawable.ic_flag_en,
+        "fr" to R.drawable.ic_flag_fr,
+        "es" to R.drawable.ic_flag_es,
+        "de" to R.drawable.ic_flag_gr
     )
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedLanguage by remember { mutableStateOf("EN") }
 
     val onGenreSelected: (String) -> Unit = { genre ->
         selectedGenres = if (selectedGenres.contains(genre)) {
@@ -110,7 +117,7 @@ fun MoviesScreen(
                 Box {
                     Button(onClick = { expanded = true }) {
                         Image(
-                            painter = painterResource(id = languageIcons[selectedLanguage]!!),
+                            painter = painterResource(id = languageIcons[selectedLanguage] ?: R.drawable.ic_flag_en),
                             contentDescription = "Language Icon",
                             modifier = Modifier.size(24.dp)
                         )
@@ -128,6 +135,11 @@ fun MoviesScreen(
                                 onClick = {
                                     selectedLanguage = lang
                                     expanded = false
+                                    preferencesManager.saveLanguage(lang)
+                                    viewModel.updateMoviesList(
+                                        selectedTab = selectedTab,
+                                        apiKey = BuildConfig.API_KEY
+                                    )
                                 },
                                 leadingIcon = {
                                     Image(
@@ -187,3 +199,4 @@ val genreMap = mapOf(
     "Horror" to 27,
     "Sci-Fi" to 878
 )
+

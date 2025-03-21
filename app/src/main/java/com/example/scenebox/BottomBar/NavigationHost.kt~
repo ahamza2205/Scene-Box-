@@ -31,8 +31,8 @@ import com.example.scenebox.screens.movies.presentation.MoviesViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationHost(navController: NavHostController, modifier: Modifier = Modifier) {
-    val defaultTab = stringResource(R.string.tab_now_playing)
-    var selectedTab by remember { mutableStateOf(defaultTab) }
+    var selectedTab by remember { mutableStateOf(stringResource(R.string.tab_now_playing)) }
+
     var selectedGenres by remember { mutableStateOf<List<String>>(emptyList()) }
     var minRating by remember { mutableStateOf(0f) }
     val moviesViewModel: MoviesViewModel = viewModel()
