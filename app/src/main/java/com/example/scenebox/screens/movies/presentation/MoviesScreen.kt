@@ -57,7 +57,7 @@ fun MoviesScreen(
 
     val languages = listOf("ar", "en", "fr", "es", "de")
     val languageIcons = mapOf(
-        "ar" to R.drawable.ic_flag_ar,
+        "ar" to R.drawable.a,
         "en" to R.drawable.ic_flag_en,
         "fr" to R.drawable.ic_flag_fr,
         "es" to R.drawable.ic_flag_es,
